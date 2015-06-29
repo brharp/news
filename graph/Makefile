@@ -1,6 +1,8 @@
 
+htdocs=/var/www/htdocs/news/graph
+
 all:
-	cp *.html *.js /var/www/htdocs/news/
+	cp *.html *.js $(htdocs)/
 	cc -lm -o graph graph.c
 
 run: all

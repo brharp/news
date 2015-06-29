@@ -10,7 +10,7 @@ void js_begincurve()
 
 void js_endcurve()
 {
-	puts("}; paintchart();");
+	puts("}; chartWindow.paint();");
 //	fflush(stdout);
 }
 
