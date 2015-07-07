@@ -9,31 +9,49 @@ function DefaultWindow(x, y, width, height) {
 DefaultWindow.prototype = Object.create(null);
 DefaultWindow.prototype.constructor = DefaultWindow;
 
+DefaultWindow.prototype.getClientRect = function(rect) {
+	rect.left   = 0;
+	rect.top    = 0;
+	rect.right  = this.width - 32;
+	rect.bottom = this.height - 32;
+	return rect;
+}
+
 DefaultWindow.prototype.paint = function () {
-	var canvas = this.canvas;
-	var width = canvas.width;
-	var height = canvas.height;
 	var context = canvas.getContext("2d");
-	context.clearRect(0, 0, width, height);
+	var rect = {};
+	context.fillStyle = "gray";
+	context.fillRect(this.x, this.y, this.width, this.height);
+	context.save();
+	this.getClientRect(rect);
+	context.translate(this.x + 16, this.y + 16);
+	context.beginPath();
+	context.rect(0, 0, this.width - 32, this.height - 32);
+	context.clip();
+	this.paintclient();
+	context.restore();
 };
 
 DefaultWindow.prototype.show = function () {
 	var self = this;
-	this.canvas = document.createElement("canvas");
-	this.canvas.width = this.width;
-	this.canvas.height = this.height;
-	this.canvas.style.position = "absolute";
-	this.canvas.style.left = this.x + "px";
-	this.canvas.style.top = this.y + "px";
-	this.canvas.addEventListener('mouseup', function(event) {
-		self.contextmenu(event);
-	});
-	document.body.appendChild(this.canvas);
+	canvas.addEventListener('mouseup', this);
 	this.paint();
 };
 
+DefaultWindow.prototype.handleEvent = function (event) {
+	switch (event.type) {
+	case 'mouseup':
+		var x = event.clientX - this.x;
+		var y = event.clientY - this.y;
+		if (x >= 0 && x <= this.width && y >= 0 && y <= this.height) {
+			this.contextmenu(event);
+		}
+		break;
+	}
+};
+
 DefaultWindow.prototype.destroy = function () {
-	document.body.removeChild(this.canvas);
+	canvas.removeEventListener('mouseup', this);
 };
 
 DefaultWindow.prototype.move = function (x, y) {

@@ -15,11 +15,16 @@ ChartWindow.prototype.super = DefaultWindow.prototype;
 displaylist = function() {};
 	/* Define an empty display list. */
 
-ChartWindow.prototype.paint = function() {
+ChartWindow.prototype.paintclient = function() {
 	/* A function to paint the chart. */
-	var context = this.canvas.getContext("2d");
+	var context = canvas.getContext("2d");
+	var rect = new Object();
+	this.getClientRect(rect);
+    context.fillStyle = "white";
+    context.fillRect(0, 0, rect.right, rect.bottom);
+
 	context.save();
-	context.scale(this.canvas.width/13, this.canvas.height/3);
+	context.scale(rect.right/13, rect.bottom/3);
 		/* New coordinate system is 13x3. */
 	context.clearRect(0, 0, 13, 3);
 		/* Clear the chart. */
@@ -36,6 +41,10 @@ ChartWindow.prototype.paint = function() {
 	context.stroke();
 		/* Draw it. */
 }
+
+var canvas = document.getElementsByTagName("canvas")[0];
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 chartWindow = new ChartWindow();
 chartWindow.show();
