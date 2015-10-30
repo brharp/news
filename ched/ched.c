@@ -26,18 +26,6 @@ void js_stroketext(char *text, float x, float y)
 	fprintf(stdout, "context.strokeText('%s', %f, %f);", text, x, y);
 }
 
-int js_menuhit(int *index)
-{
-	int tag;
-	char fmt[80];
-	sprintf(fmt, "%d", MENUHIT_TAG);
-	if (fscanf(stdin, fmt, &tag)) {
-		fscanf(stdin, "%d", index);
-	}
-	return tag;
-}
-
-
 int main(int argc, char *argv[])
 {
 	int i, index;
@@ -47,14 +35,19 @@ int main(int argc, char *argv[])
 	Font f = document_font(d);
 	int line_height = font_line_height(f);
 	float x = 0, y = line_height;
+	char fontdesc[32];
 
 	setbuf(stdin, 0);
 	setbuf(stdout, 0);
 
 	for (;;) {
 
+		x = 0;
+		y = line_height;
+
 		js_beginpaint();
-		js_setfont("16px serif");
+		sprintf(fontdesc, "%dpx serif", line_height);
+		js_setfont(fontdesc);
 		for (i = 0; i < line_count; i++) {
 			js_stroketext(line_text(lines_line_at(lines, i)), x, y);
 			y += line_height;
@@ -62,6 +55,12 @@ int main(int argc, char *argv[])
 		js_endpaint();
 
 		scanf("%d", &index);
+		switch (index) {
+		case 0: line_height = 10; break;
+		case 1: line_height = 12; break;
+		case 2: line_height = 14; break;
+		case 3: line_height = 16; break;
+		}
 	}
 }
 

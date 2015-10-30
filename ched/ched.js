@@ -3,7 +3,7 @@ function ChedWindow() {
     var self = this;
 	DefaultWindow.call(self, null, 0, 0, 500, 500);
 	var self = this;
-	var items = ["sin", "cos", "damped", "sum"];
+	var items = ["10px", "12px", "14px", "16px"];
 	self.clientmenu = new Menu(items, function(i) {
 		ws.send(i);
 	});
