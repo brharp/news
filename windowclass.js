@@ -1,9 +1,26 @@
 
-function DefaultWindow(x, y, width, height) {
+function px(px) {
+	return px+"px";
+}
+
+function DefaultWindow(owner, x, y, width, height) {
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
+	this.div = document.createElement('div');
+	this.div.className = "window";
+	this.div.style.position = "absolute";
+	this.div.style.left = px(x);
+	this.div.style.top = px(y);
+	this.div.style.width = px(width);
+	this.div.style.height = px(height);
+	this.canvas = document.createElement("canvas");
+	this.canvas.width = width;
+	this.canvas.height = height;
+	this.div.appendChild(this.canvas);
+	this.parent = owner?owner.div:document.body;
+	this.parent.appendChild(this.div);
 }
 
 DefaultWindow.prototype = Object.create(null);
@@ -18,13 +35,13 @@ DefaultWindow.prototype.getClientRect = function(rect) {
 }
 
 DefaultWindow.prototype.paint = function () {
-	var context = canvas.getContext("2d");
+	var context = this.canvas.getContext("2d");
 	var rect = {};
 	context.fillStyle = "gray";
-	context.fillRect(this.x, this.y, this.width, this.height);
+	context.fillRect(0, 0, this.width, this.height);
 	context.save();
 	this.getClientRect(rect);
-	context.translate(this.x + 16, this.y + 16);
+	context.translate(16, 16);
 	context.beginPath();
 	context.rect(0, 0, this.width - 32, this.height - 32);
 	context.clip();
@@ -33,8 +50,8 @@ DefaultWindow.prototype.paint = function () {
 };
 
 DefaultWindow.prototype.show = function () {
-	var self = this;
-	canvas.addEventListener('mouseup', this);
+	this.parent.appendChild(this.div);
+	this.canvas.addEventListener('mouseup', this);
 	this.paint();
 };
 
@@ -50,13 +67,15 @@ DefaultWindow.prototype.handleEvent = function (event) {
 	}
 };
 
-DefaultWindow.prototype.destroy = function () {
-	canvas.removeEventListener('mouseup', this);
+DefaultWindow.prototype.hide = function () {
+	this.parent.removeChild(this.div);
 };
 
 DefaultWindow.prototype.move = function (x, y) {
 	this.x = x;
 	this.y = y;
+	this.div.style.left = px(x);
+	this.div.style.top = px(y);
 };
 
 DefaultWindow.prototype.contextmenu = function (event) {

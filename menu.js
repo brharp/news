@@ -1,6 +1,6 @@
 
 function Menu(items, callback) {
-	DefaultWindow.call(this, 0, 0, 100+32, items.length*16+32);
+	DefaultWindow.call(this, null, 0, 0, 100+32, items.length*16+32);
 	this.items = items;
 	this.selection = -1;
 	this.callback = callback;
@@ -28,7 +28,7 @@ Menu.prototype.show = function() {
 		event.stopPropagation();
 		document.body.removeEventListener('mousemove', onmousemove, true);
 		document.body.removeEventListener('mouseup', onmouseup, true);
-		menu.destroy();
+		menu.hide();
 		menu.callback(menu.selection);
 	};
 	document.body.addEventListener('mousemove', onmousemove, true);
@@ -37,7 +37,7 @@ Menu.prototype.show = function() {
 
 Menu.prototype.paintclient = function() {
 	//var context = this.canvas.getContext("2d");
-	var context = canvas.getContext("2d");
+	var context = this.canvas.getContext("2d");
 	context.save();
 	context.font = '13px sans-serif';
 	context.clearRect(0, 0, this.width, this.height);

@@ -2,7 +2,7 @@
 function LinesWindow(nlines) {
 	var self = this;
 	var items = ["5", "10", "15", "20"];
-	DefaultWindow.call(self, 25, 25, 300, 300);
+	DefaultWindow.call(self, null, 25, 25, 300, 300);
 	self.nlines = nlines;
 	self.clientmenu = new Menu(items, function (i) {
 		if (i >= 0) {
@@ -19,7 +19,7 @@ LinesWindow.prototype.super = DefaultWindow.prototype;
 LinesWindow.prototype.paintclient = function () {
 	//this.super.paint.call(this);
 	//var context = this.canvas.getContext("2d");
-	var context = canvas.getContext("2d");
+	var context = this.canvas.getContext("2d");
 	var rect = new Object();
 	this.getClientRect(rect);
 	context.fillStyle = "white";
@@ -39,9 +39,6 @@ LinesWindow.prototype.paintclient = function () {
 	context.stroke();
 }
 
-var canvas = document.getElementsByTagName("canvas")[0];
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 linesWindow = new LinesWindow(10);
 linesWindow.show();
 

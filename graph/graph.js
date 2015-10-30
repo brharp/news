@@ -1,6 +1,7 @@
 
 function ChartWindow() {
-	DefaultWindow.call(this, 0, 0, 500, 500);
+    var self = this;
+	DefaultWindow.call(self, null, 0, 0, 500, 500);
 	var self = this;
 	var items = ["sin", "cos", "damped", "sum"];
 	self.clientmenu = new Menu(items, function(i) {
@@ -17,7 +18,7 @@ displaylist = function() {};
 
 ChartWindow.prototype.paintclient = function() {
 	/* A function to paint the chart. */
-	var context = canvas.getContext("2d");
+	var context = this.canvas.getContext("2d");
 	var rect = new Object();
 	this.getClientRect(rect);
     context.fillStyle = "white";
@@ -41,10 +42,6 @@ ChartWindow.prototype.paintclient = function() {
 	context.stroke();
 		/* Draw it. */
 }
-
-var canvas = document.getElementsByTagName("canvas")[0];
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 chartWindow = new ChartWindow();
 chartWindow.show();
