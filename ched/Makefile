@@ -1,7 +1,7 @@
 
 name=ched
 htdocs=/var/www/htdocs/news/$(name)
-objects=Line.o Document.o Font.o
+objects=Line.o Document.o Font.o View.o
 
 all: $(objects)
 	mkdir -p $(htdocs)
