@@ -1,7 +1,7 @@
 
-function ChedWindow() {
+function ChedWindow(width, height) {
     var self = this;
-	DefaultWindow.call(self, null, 0, 0, 500, 500);
+	DefaultWindow.call(self, null, 0, 0, width, height);
 	var self = this;
 	var items = ["10px", "12px", "14px", "16px"];
 	self.clientmenu = new Menu(items, function(i) {
@@ -29,9 +29,6 @@ ChedWindow.prototype.paintclient = function() {
 		/* Invoke the display list function. */
 	context.restore();
 }
-
-chedWindow = new ChedWindow();
-chedWindow.show();
 
 var ws = new WebSocket('ws://localhost:8080/');
 ws.onmessage = function(event) {
