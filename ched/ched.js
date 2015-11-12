@@ -33,7 +33,7 @@ ChedWindow.prototype.paintclient = function() {
 var ws = new WebSocket('ws://localhost:8080/');
 ws.onmessage = function(event) {
 	var geval = eval;
-	console.log(event.data);
+	//console.log(event.data);
 	geval(event.data);
 };
 
