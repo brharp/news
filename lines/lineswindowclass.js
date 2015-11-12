@@ -19,7 +19,7 @@ LinesWindow.prototype.super = DefaultWindow.prototype;
 LinesWindow.prototype.paintclient = function () {
 	//this.super.paint.call(this);
 	//var context = this.canvas.getContext("2d");
-	var context = this.canvas.getContext("2d");
+	var context = this.ClientCanvas;
 	var rect = new Object();
 	this.getClientRect(rect);
 	context.fillStyle = "white";

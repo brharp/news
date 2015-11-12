@@ -8,22 +8,23 @@
 #include "View.h"
 
 #define MENUHIT_TAG 1
-#define WIDTH	800
-#define HEIGHT	600
+#define WIDTH	400
+#define HEIGHT	300
 
 #include "ipsum.h"
 char *ipsum = LOREM_IPSUM;
 
 void js_init()
 {
-	//fprintf(stdout, "chedWindow = new ChedWindow(%d, %d);\n", WIDTH, HEIGHT);
+	fprintf(stdout, "chedWindow = new ChedWindow(%d, %d);\n", WIDTH, HEIGHT);
 	//fprintf(stdout, "chedWindow.show();\n");
-	fprintf(stdout, "context = document.getElementsByTagName('canvas')[0].getContext('2d');\n");
+	//fprintf(stdout, "context = document.getElementsByTagName('canvas')[0].getContext('2d');\n");
 }
 
 void js_beginpaint()
 {
 	//fputs("displaylist = function (context) {", stdout);
+	fprintf(stdout, "currentcanvas = chedWindow.ClientCanvas;\n");
 }
 
 void js_endpaint()
@@ -33,28 +34,28 @@ void js_endpaint()
 
 void js_setfont(char *fontdesc)
 {
-	fprintf(stdout, "context.font = '%s';\n", fontdesc);
+	fprintf(stdout, "currentcanvas.font = '%s';\n", fontdesc);
 }
 
 void js_stroketext(char *text, float x, float y)
 {
-	fprintf(stdout, "context.strokeText('%s', %f, %f);\n", text, x, y);
+	fprintf(stdout, "currentcanvas.strokeText('%s', %f, %f);\n", text, x, y);
 }
 
 void js_filltext(char *text, float x, float y)
 {
-	fprintf(stdout, "context.fillText('%s', %f, %f);\n", text, x, y);
+	fprintf(stdout, "currentcanvas.fillText('%s', %f, %f);\n", text, x, y);
 }
 
 void js_strokerect(float x, float y, float w, float h)
 {
-	fprintf(stdout, "context.strokeRect(%f, %f, %f, %f);\n", x, y, w, y);
+	fprintf(stdout, "currentcanvas.strokeRect(%f, %f, %f, %f);\n", x, y, w, y);
 }
 
 float js_measuretext(char *s)
 {
 	float width;
-	fprintf(stdout, "ws.send(context.measureText('%s').width);\n", s);
+	fprintf(stdout, "ws.send(currentcanvas.measureText('%s').width);\n", s);
 	fscanf(stdin, "%f", &width);
 	return width;
 }
