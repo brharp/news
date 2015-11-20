@@ -1,7 +1,8 @@
 
-htdocs=/var/www/htdocs
+htdocs=/var/www/htdocs/news
 
 install:
-	cp *.js $(htdocs)/news/
+	mkdir -p $(htdocs)
+	cp *.html *.js $(htdocs)
 
 

@@ -8,25 +8,27 @@ function DefaultWindow(owner, x, y, width, height) {
 	this.y = y;
 	this.width = width;
 	this.height = height;
-/*
-	this.div = document.createElement('div');
-	this.div.className = "window";
-	this.div.style.position = "absolute";
-	this.div.style.left = px(x);
-	this.div.style.top = px(y);
-	this.div.style.width = px(width);
-	this.div.style.height = px(height);
-	this.canvas = document.createElement("canvas");
-	this.canvas.width = width;
-	this.canvas.height = height;
-	this.div.appendChild(this.canvas);
-	this.parent = owner?owner.div:document.body;
-	this.parent.appendChild(this.div);
-*/
-	/* Create frame. */
-	this.FrameCanvas = newcanvas();
 
-	this.ClientCanvas = newcanvas(this.FrameCanvas);
+	function canvas(owner) {
+		this.div = document.createElement('div');
+		this.div.className = "window";
+		this.div.style.position = "absolute";
+		this.div.style.left = px(x);
+		this.div.style.top = px(y);
+		this.div.style.width = px(width);
+		this.div.style.height = px(height);
+		this.canvas = document.createElement("canvas");
+		this.canvas.width = width;
+		this.canvas.height = height;
+		this.div.appendChild(this.canvas);
+		this.parent = owner?owner.div:document.body;
+		this.parent.appendChild(this.div);
+	}
+
+	/* Create frame. */
+	this.FrameCanvas = new canvas();
+
+	this.ClientCanvas = new canvas(this.FrameCanvas);
 	this.ClientCanvas.translate(x, y);
 	this.ClientCanvas.rect(0, 0, width, height);
 	this.ClientCanvas.clip();
