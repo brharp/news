@@ -84,3 +84,19 @@ circle.setAttributeNS(null, "r",  40.0);
 circle.setAttributeNS(null, "fill", "green"); 
 svg.appendChild(circle);
 ```
+
+# Output Arguments
+
+*Wrap definition:*
+```
+defjs jsgetradius(char *circleid, float *radius)
+  var circle = document.getElementById("circleid");
+  *radius = circle.radius;
+endjs
+```
+
+*Procedure call:*
+```
+float radius;
+jsgetradius(&radius);
+```
